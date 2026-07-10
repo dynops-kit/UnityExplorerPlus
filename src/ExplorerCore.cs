@@ -21,9 +21,9 @@ namespace UnityExplorer;
 public static class ExplorerCore
 {
     public const string NAME = "UnityExplorerPlus";
-    public const string VERSION = "1.2";
-    public const string AUTHOR = "Sinai, yukieiji, freddyguythe10th, MSVE640 HD";
-    public const string GUID = "com.sticky.unityexplorerplus";
+    public const string VERSION = "1.3";
+    public const string AUTHOR = "Sinai, yukieiji, freddyguythe10th, EkremTheStar";
+    public const string GUID = "com.ekrem.unityexplorerplus";
 
     public static IExplorerLoader Loader { get; private set; }
     public static string ExplorerFolder => Path.Combine(Loader.ExplorerFolderDestination, Loader.ExplorerFolderName);

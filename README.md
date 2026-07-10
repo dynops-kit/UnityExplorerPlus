@@ -6,7 +6,7 @@
   🔍 An in-game UI for exploring, debugging and modifying Unity games.
 </p>
 <p align="center">
-  ✔️ Supports most Unity versions from 5.2 to 6.0+ (IL2CPP and Mono).
+  ✔️ Supports most Unity versions from 5.2 to 6.2 (Might not work properly on 6.3+) (IL2CPP and Mono).
 </p>
 <p align="center">
   ✨ Powered by <a href="https://github.com/yukieiji/UniverseLib">UniverseLib</a><br>

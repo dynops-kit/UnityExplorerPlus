@@ -72,7 +72,8 @@ namespace UnityExplorer.CSConsole
                 StdLib = true,
                 Target = Target.Library,
                 WarningLevel = 0,
-                EnhancedWarnings = false
+                EnhancedWarnings = false,
+                Unsafe = true
             };
 
             return new CompilerContext(settings, _reportPrinter);
