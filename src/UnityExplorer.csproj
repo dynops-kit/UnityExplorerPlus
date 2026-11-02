@@ -16,6 +16,10 @@
     <Configurations>BIE_Cpp;BIE_Cpp_CoreCLR;BIE_Unity_Cpp_CoreCLR;BIE5_Mono;BIE6_Mono;BIE6_Unity_Mono;ML_Cpp_net6;ML_Cpp_CoreCLR;ML_Cpp_net472;ML_Mono;STANDALONE_Mono;STANDALONE_Cpp;STANDALONE_Cpp_CoreCLR</Configurations>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <GameAssembliesPath Condition="'$(GameAssembliesPath)' == ''">$(MSBuildThisFileDirectory)..\lib\interop</GameAssembliesPath>
+  </PropertyGroup>
+
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <ItemGroup Condition="'$(Configuration)'=='ML_Cpp_net6' or '$(Configuration)'=='ML_Cpp_net472' or '$(Configuration)'=='STANDALONE_Cpp' or '$(Configuration)'=='BIE_Cpp'">
@@ -132,7 +136,7 @@
   <!-- ~~~~~ NUGET ~~~~~ -->
   <ItemGroup>
     <PackageReference Include="HarmonyX" Version="2.5.2" IncludeAssets="compile" />
-    <PackageReference Include="Samboy063.Tomlet" Version="3.1.3" />
+    <PackageReference Include="Samboy063.Tomlet" Version="3.1.3" Condition="'$(Configuration)' != 'ML_Cpp_CoreCLR' or '$(MelonLoaderRuntimePath)' == ''" />
     <PackageReference Include="Microsoft.Unity.Analyzers" Version="1.19.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -149,9 +153,24 @@
   </ItemGroup>
 
   <!-- il2cpp Interop nuget -->
-  <ItemGroup Condition="'$(Configuration)'=='BIE_Cpp_CoreCLR' or '$(Configuration)'=='BIE_Unity_Cpp_CoreCLR' or '$(Configuration)'=='ML_Cpp_CoreCLR' or '$(Configuration)'=='STANDALONE_Cpp_CoreCLR'">
+  <ItemGroup Condition="('$(Configuration)'=='BIE_Cpp_CoreCLR' or '$(Configuration)'=='BIE_Unity_Cpp_CoreCLR' or '$(Configuration)'=='ML_Cpp_CoreCLR' or '$(Configuration)'=='STANDALONE_Cpp_CoreCLR') and ('$(Configuration)' != 'ML_Cpp_CoreCLR' or '$(MelonLoaderRuntimePath)' == '')">
     <PackageReference Include="Il2CppInterop.Common" Version="1.0.0" />
     <PackageReference Include="Il2CppInterop.Runtime" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='ML_Cpp_CoreCLR' and '$(MelonLoaderRuntimePath)' != ''">
+    <Reference Include="Il2CppInterop.Common">
+      <HintPath>$(MelonLoaderRuntimePath)\Il2CppInterop.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>$(MelonLoaderRuntimePath)\Il2CppInterop.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Tomlet">
+      <HintPath>$(MelonLoaderRuntimePath)\Tomlet.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
 
   <!-- BIE il2cpp Interop -->
@@ -330,7 +349,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\lib\interop\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(GameAssembliesPath)\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">

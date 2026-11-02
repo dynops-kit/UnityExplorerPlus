@@ -48,8 +48,11 @@ namespace UnityExplorer.ObjectExplorer
 
         internal static void Init()
         {
-            // Check if the game has "DontDestroyOnLoad"
-            DontDestroyExists = Scene.GetNameInternal(-12) == "DontDestroyOnLoad";
+            // Check if the game has "DontDestroyOnLoad". Read the public Scene.name
+            // property instead of calling Unity's private GetNameInternal(int): Unity 6.3
+            // changed Scene.handle from int to SceneHandle, which changes that internal
+            // method's signature and breaks older precompiled UnityExplorer builds.
+            DontDestroyExists = new Scene { m_Handle = -12 }.name == "DontDestroyOnLoad";
 
             // Try to get all scenes in the build settings. This may not work.
             try

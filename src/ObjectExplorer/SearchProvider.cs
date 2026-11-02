@@ -151,7 +151,7 @@ public static class SearchProvider
         return list;
     }
 
-    internal static string[] instanceNames = [
+    internal static string[] instanceNames = new[] {
         "m_instance",
         "m_Instance",
         "s_instance",
@@ -162,7 +162,7 @@ public static class SearchProvider
         "Instance",
         "<Instance>k__BackingField",
         "<instance>k__BackingField",
-    ];
+    };
 
     internal static List<object> InstanceSearch(string input)
     {
